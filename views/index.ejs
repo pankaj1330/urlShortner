@@ -1,0 +1,88 @@
+c<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortner</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>URL Shortner</h1>
+    <form id="urlform">
+        <input type="text" name="url" id="url" placeholder="https://url.com" pattern="https?://.+" title="include http:// or https://">
+        <input type="submit" id="generateURL" value="Generate Short URL">
+    </form>
+    <div style="text-align: center; margin-top: 6rem; font-size: .8rem;">
+        <a href="/clicks">Track the URL clicks</a>
+    </div>
+    <div class="shorturl">
+        <input type="text" id="shorturl" placeholder="short url" value="" disabled/>
+        <button id="copy" onclick="copyToClipboard()">copy</button>
+    </div>
+
+    <!-- <script src="/script.js"></script> -->
+    <script>
+        const shorturl = document.getElementById('shorturl');
+        const shorturlDiv = document.querySelector('.shorturl');
+        const urlform = document.getElementById('urlform');
+        const copy = document.getElementById('copy')
+
+
+
+        urlform.addEventListener('submit',async (e)=>{
+            e.preventDefault();
+
+            copy.textContent = 'Copy'
+            if(urlform.url.value === ""){
+            return alert("enter a url")
+            }
+            const url = urlform.url.value;
+            const shortUrl = await fetch("/generateShortURL", {
+                method: "post",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    url : url
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                return data.shorturl;
+            }).catch(err => {
+            console.log(err);
+            alert('something went wrong');
+            return ""
+            });
+            if(shortUrl === ""){
+            return;
+            }
+            shorturl.value = `http://localhost:8000/${shortUrl}`;
+            shorturlDiv.style.display = "block";
+            urlform.style.display = "none";
+            return;
+        })
+
+
+        function copyToClipboard() {
+        if(shorturl.value === ""){
+            return alert('generate a shorturl first')
+        }
+
+        shorturl.select();
+        shorturl.setSelectionRange(0, 99999);
+
+        navigator.clipboard.writeText(shorturl.value);
+        copy.textContent = 'Copied'
+        }
+
+        function reset(){
+        shorturlDiv.style.display = "none";
+        urlform.style.display = "block";
+        }
+
+        reset();
+    </script>
+</body>
+</html>
