@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+html{
+    font-size: 16px;
+}
+h1{
+    text-align: center;
+    margin-top: 2rem;
+    color: rgb(107, 107, 255);
+}
+#clicks,#urlform{
+    text-align: center;
+    margin-top: 3rem;
+}
+#clicks input,#urlform input{
+    display:block;
+    margin:1rem auto;
+}
+#clicks input[type="text"],#urlform input[type="text"]{
+    padding: .6rem;
+    width: 400px;
+}
+#urlform input[type="submit"],#clicks input[type="submit"]{
+    padding: .6rem;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    background-color: rgb(107, 107, 255);
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#clicks input[type="submit"]:active,#urlform input[type="submit"]:active{
+    transform: translateY(2px);
+    transition: all .4s;
+}
+.shorturl{
+    text-align: center;
+    margin-top: 5rem;
+}
+.shorturl input[type="text"]{
+    padding: .6rem;
+    outline: none;
+    border: 1px solid rgb(93, 93, 93);
+    width: 400px;
+}
+.shorturl button{
+    padding: .6rem;
+    border: 1px solid rgb(93, 93, 93);
+    letter-spacing: 1px;
+    margin-left: -6px;
+    background-color: rgb(107, 107, 255);
+    color: white;
+    cursor: pointer;
+}
+
+@media only screen and (max-width : 550px){
+    .shorturl input[type="text"]{
+        width: 80%;
+        margin-bottom: 5px;
+    }
+    #urlform input[type="text"]{
+        width: 80%;
+    }
+}
