@@ -17,17 +17,17 @@ app.set('views','./views')
 const urlRouter = require('./routers/url');
 // app.use('/', staticRouter);
 
-const router = express.Router();
+// const router = express.Router();
 
-router.get('/',(req,res)=>{
+app.get('/',(req,res)=>{
     return res.render('index');
 })
-router.get('/clicks',(req,res)=>{
+app.get('/clicks',(req,res)=>{
     return res.render('clicks');
 })
 
-module.exports = router;
-app.use('/', urlRouter);
+// module.exports = router;
+// app.use('/', urlRouter);
 
 app.listen(PORT, () => {
     console.log(`listening at port ${PORT}`);
