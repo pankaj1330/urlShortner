@@ -20,7 +20,8 @@ const urlRouter = require('./routers/url');
 // const router = express.Router();
 
 app.get('/',(req,res)=>{
-    return res.render('index');
+    console.log("hi");
+    return res.status(200).render('index');
 })
 app.get('/clicks',(req,res)=>{
     return res.render('clicks');
