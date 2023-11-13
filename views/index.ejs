@@ -1,4 +1,4 @@
-c<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,28 +21,24 @@ c<!DOCTYPE html>
         <button id="copy" onclick="copyToClipboard()">copy</button>
     </div>
 
-    <!-- <script src="/script.js"></script> -->
     <script>
         const shorturl = document.getElementById('shorturl');
         const shorturlDiv = document.querySelector('.shorturl');
         const urlform = document.getElementById('urlform');
         const copy = document.getElementById('copy')
 
-
-
         urlform.addEventListener('submit',async (e)=>{
             e.preventDefault();
 
             copy.textContent = 'Copy'
             if(urlform.url.value === ""){
-            return alert("enter a url")
+                return alert("enter a url")
             }
             const url = urlform.url.value;
             const shortUrl = await fetch("/generateShortURL", {
                 method: "post",
                 headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     url : url
@@ -53,13 +49,13 @@ c<!DOCTYPE html>
                 return data.shorturl;
             }).catch(err => {
             console.log(err);
-            alert('something went wrong');
-            return ""
+                alert('something went wrong');
+                return ""
             });
             if(shortUrl === ""){
-            return;
+                return;
             }
-            shorturl.value = `http://localhost:8000/${shortUrl}`;
+            shorturl.value = `${window.location.origin}/${shortUrl}`;
             shorturlDiv.style.display = "block";
             urlform.style.display = "none";
             return;
@@ -67,20 +63,20 @@ c<!DOCTYPE html>
 
 
         function copyToClipboard() {
-        if(shorturl.value === ""){
-            return alert('generate a shorturl first')
-        }
+            if(shorturl.value === ""){
+                return alert('generate a shorturl first')
+            }
 
-        shorturl.select();
-        shorturl.setSelectionRange(0, 99999);
+            shorturl.select();
+            shorturl.setSelectionRange(0, 200);
 
-        navigator.clipboard.writeText(shorturl.value);
-        copy.textContent = 'Copied'
+            navigator.clipboard.writeText(shorturl.value);
+            copy.textContent = 'Copied'
         }
 
         function reset(){
-        shorturlDiv.style.display = "none";
-        urlform.style.display = "block";
+            shorturlDiv.style.display = "none";
+            urlform.style.display = "block";
         }
 
         reset();

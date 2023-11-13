@@ -13,22 +13,11 @@ app.use(express.json());
 app.set('view engine','ejs');
 app.set('views','./views')
 
-// const staticRouter = require('./routers/static');
+const staticRouter = require('./routers/static');
 const urlRouter = require('./routers/url');
-// app.use('/', staticRouter);
 
-// const router = express.Router();
-
-app.get('/',(req,res)=>{
-    console.log("hi");
-    return res.status(200).render('index');
-})
-app.get('/clicks',(req,res)=>{
-    return res.render('clicks');
-})
-
-// module.exports = router;
-// app.use('/', urlRouter);
+app.use('/', staticRouter);
+app.use('/', urlRouter);
 
 app.listen(PORT, () => {
     console.log(`listening at port ${PORT}`);
