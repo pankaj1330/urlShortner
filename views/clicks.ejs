@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track the URL clicks</title>
+    <link rel="icon" type="image" href="/fav.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>URL Shortner</h1>
+    <h4 style="text-align: center; margin-top: 2rem; font-weight: lighter;">Track clicks on your url</h4>
+    <form id="clicks">
+        <input type="text" name="surl" id="surl" placeholder="https://shorturl.com" pattern="https?://.+" title="include http:// or https://">
+        <input type="submit" value="Track">
+    </form>
+    <h4 class="click" style="text-align: center;">Clicks : 0</h4>
+
+    
+    <script>
+        const clickform = document.getElementById('clicks')
+        const click = document.querySelector('.click')
+        clickform.addEventListener('submit',async (e)=>{
+            e.preventDefault();
+
+            if(clickform.surl.value === ""){
+            return alert("enter a short url")
+            }
+            const url = clickform.surl.value;
+            const shortUrl = await fetch("/getData", {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        shorturl : url.replace(`${window.location.origin}/`,"")
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    return data;
+                }).catch(err => {
+                console.log(err);
+                alert('something went wrong');
+                return ""
+            });
+            if(shortUrl === ""){
+                return;
+            }
+            click.textContent = `Clicks : ${shortUrl.clicks}`
+            return;
+        })
+
+    </script>
+</body>
+</html>
