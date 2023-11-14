@@ -7,11 +7,11 @@ const PORT = process.env.PORT || 8000;
 
 mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/URL').then(() => { console.log('successfully connect to db'); }).catch((err) => { console.log(err); })
 
-app.use(express.static('./public'))
+app.use(express.static(__dirname+'/public'))
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.set('view engine','ejs');
-app.set('views','./views')
+app.set('views',__dirname+'/views')
 
 const staticRouter = require('./routers/static');
 const urlRouter = require('./routers/url');
